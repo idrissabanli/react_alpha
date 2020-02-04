@@ -1,21 +1,46 @@
 import React, { Component } from 'react';
 import '../App.css';
+import PropTypes from 'prop-types'
 
 class Product extends Component {
+    state = {
+        isVisible: true
+    }
+    onHide = (e) => {
+        console.log(this);
+        this.setState({
+            isVisible: !this.state.isVisible
+        }); 
+    }
+    
   render() {
-      const {name, price} = this.props;
+    const {id, name, price, image} = this.props;
+    
+    
     return (
-        <div className="col-md-4">
+        <div className="col-md-4 my-5">
             <div className="card" >
-                <img  src="https://cdn.tmobile.com/content/dam/t-mobile/en-p/cell-phones/apple/Apple-iPhone-11-Pro/Midnight-Green/Apple-iPhone-11-Pro-Midnight-Green-frontimage.jpg" className="card-img-top product_image" alt="..."/>
+                <img  src={image} className="card-img-top product_image" alt="..."/>
+                { this.state.isVisible?
                 <div className="card-body">
                     <h5 className="card-title">{name}</h5>
                     <p className="card-text"><b>Price:{price}</b> Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     <a href="#" className="btn btn-primary">Go somewhere</a>
-                </div>
+                </div> :
+                null
+                }
+                <button onClick={this.onHide}>{ this.state.isVisible ? 'Hide' : 'Show' }</button>
             </div>
         </div>
     )
   }
+}
+Product.defaultProps = {
+    name: 'No Info'
+}
+
+Product.propTypes = {
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number,
 }
 export default Product;
