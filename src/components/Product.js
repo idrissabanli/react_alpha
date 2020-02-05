@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import ProductConsumer  from '../ProductContext';
 
 class Product extends Component {
     state = {
@@ -12,12 +13,22 @@ class Product extends Component {
             isVisible: !this.state.isVisible
         }); 
     }
+
+    deleteProduct = (dispatch, e) =>{
+        const {id} = this.props;
+        dispatch({type: "DELETE_PRODUCT", payload:id})
+    }
     
   render() {
-    const {id, name, price, image} = this.props;
+    const {name, price, image} = this.props;
     
     
     return (
+        <ProductConsumer>
+        {
+            value => {
+                const {dispatch} = value;
+                return (
         <div className="col-md-4 my-5">
             <div className="card" >
                 <img  src={image} className="card-img-top product_image" alt="..."/>
@@ -25,13 +36,20 @@ class Product extends Component {
                 <div className="card-body">
                     <h5 className="card-title">{name}</h5>
                     <p className="card-text"><b>Price:{price}</b> Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" className="btn btn-primary">Go somewhere</a>
+                    <a className="btn btn-primary">Go somewhere</a>
                 </div> :
                 null
                 }
+                <div className="d-flex justify-content-center mb-3">
                 <button onClick={this.onHide}>{ this.state.isVisible ? 'Hide' : 'Show' }</button>
+                <button onClick={this.deleteProduct.bind(this, dispatch)}>Delete</button>
+                </div>
             </div>
         </div>
+                )
+            }
+        }
+    </ProductConsumer>
     )
   }
 }
