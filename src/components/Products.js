@@ -3,6 +3,21 @@ import Product from './Product';
 import ProductConsumer from "../ProductContext";
 
 export default class Products extends Component {
+
+  constructor(props){
+    super(props);
+    console.log('Constructor')
+  }
+  componentDidMount() {
+    console.log('CDM');
+    this.setState({});
+  }
+
+  componentDidUpdate() {
+    console.log('CDU');
+  }
+  
+
   render() {
       
     return (

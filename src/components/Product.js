@@ -14,6 +14,16 @@ class Product extends Component {
         }); 
     }
 
+    componentDidMount() {
+        const {id} = this.props;
+        console.log('componentDidMount id=' + id );
+        this.setState({});
+      }
+
+      componentWillUnmount() {
+        console.log('componentWillUnmount')  
+      }
+        
     deleteProduct = (dispatch, e) =>{
         const {id} = this.props;
         dispatch({type: "DELETE_PRODUCT", payload:id})
