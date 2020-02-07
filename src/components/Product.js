@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import '../App.css';
 import PropTypes from 'prop-types';
 import ProductConsumer  from '../ProductContext';
+import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 class Product extends Component {
     state = {
@@ -14,23 +16,31 @@ class Product extends Component {
         }); 
     }
 
-    componentDidMount() {
-        const {id} = this.props;
-        console.log('componentDidMount id=' + id );
-        this.setState({});
-      }
+    // componentDidMount() {
+    //     const {id} = this.props;
+    //     console.log('componentDidMount id=' + id );
+    //     this.setState({});
+    //   }
 
-      componentWillUnmount() {
-        console.log('componentWillUnmount')  
-      }
+    //   componentWillUnmount() {
+    //     console.log('componentWillUnmount')  
+    //   }
         
-    deleteProduct = (dispatch, e) =>{
+    deleteProduct = async (dispatch, e) =>{
         const {id} = this.props;
-        dispatch({type: "DELETE_PRODUCT", payload:id})
+        try {
+            var response = await axios.delete(`http://localhost:8000/api/products/${id}/`);
+            if (response.status === 204){
+                dispatch({type: "DELETE_PRODUCT", payload:id});
+            }
+        } catch (error) {
+            alert(error);
+        }
+        
     }
     
   render() {
-    const {name, price, image} = this.props;
+    const {id, name, price, image} = this.props;
     
     
     return (
@@ -46,7 +56,7 @@ class Product extends Component {
                 <div className="card-body">
                     <h5 className="card-title">{name}</h5>
                     <p className="card-text"><b>Price:{price}</b> Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a className="btn btn-primary">Go somewhere</a>
+                    <Link to={`/product-detail/${id}`} className="btn btn-primary">Go somewhere</Link>
                 </div> :
                 null
                 }
@@ -69,6 +79,6 @@ Product.defaultProps = {
 
 Product.propTypes = {
     name: PropTypes.string.isRequired,
-    price: PropTypes.number,
+    price: PropTypes.string.isRequired,
 }
 export default Product;

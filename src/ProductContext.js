@@ -15,14 +15,21 @@ const reducer = (state, action) => {
     case 'ADD_PRODUCT':
       const data = {
         ...action.payload,
-        'id': 6,
-        'image': 'https://cdn.tmobile.com/content/dam/t-mobile/en-p/cell-phones/apple/Apple-iPhone-11/Black/Apple-iPhone-11-Black-frontimage.jpg',
       }
       state.products.push(data);
       return {
         ...state,
         products: state.products,
       };
+      // case 'UPDATE_PRODUCT':
+      //   const data = {
+      //     ...action.payload,
+      //   }
+      //   state.products.map(product => product.id === );
+      //   return {
+      //     ...state,
+      //     products: state.products,
+      //   };
     default:
       return state
   }
@@ -47,8 +54,8 @@ export class ProductProvider extends Component{
       // console.log(response.data)
       
     async componentDidMount() {
-        var response = await axios.get('http://localhost:3001/products')
-        console.log(response.data);
+        var response = await axios.get('http://localhost:8000/api/products/')
+        // console.log(response.data);
         this.setState({
           products: response.data,
         })
@@ -62,26 +69,26 @@ export class ProductProvider extends Component{
 
 
 
-       deleteProductInList = async (id) =>{
-        await axios.delete('');
-        this.setState({
-          'products': this.state.products.filter(product=> product.id !== id),
-        })
-      }
+      //  deleteProductInList = async (id) =>{
+      //   await axios.delete('');
+      //   this.setState({
+      //     'products': this.state.products.filter(product=> product.id !== id),
+      //   })
+      // }
     
-      addProduct = (data) =>{
-        // console.log(this);
-        data = 
-        { ...data,
-          'id':5,
-          'image': 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-xr-black-select-201809?wid=940&hei=1112&fmt=png-alpha&qlt=80&.v=1551226038992',
-        };
-        this.state.products.push(data);
-        this.setState(
-          this.state.products,
-        )
-        console.log(this.state)
-      }
+      // addProduct = (data) =>{
+      //   // console.log(this);
+      //   data = 
+      //   { ...data,
+      //     'id':5,
+      //     'image': 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-xr-black-select-201809?wid=940&hei=1112&fmt=png-alpha&qlt=80&.v=1551226038992',
+      //   };
+      //   this.state.products.push(data);
+      //   this.setState(
+      //     this.state.products,
+      //   )
+      //   console.log(this.state)
+      // }
     render() {
         return (
             <ProductContext.Provider value = {this.state}>

@@ -3,6 +3,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Navbar from './components/Navbar';
 import Products from './components/Products';
 import AddProduct from './forms/AddProduct';
+import UpdateProduct from './forms/UpdateProduct';
+import Home from './components/Home';
+import ProductDetail from './components/ProductDetail';
+
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
 
 class App extends Component {
   
@@ -10,15 +16,17 @@ class App extends Component {
     return (
       <div className="App">
         
-        <Navbar first_name="Turqut" last_name="Kerimli"/>
-
-        <div className="container">
-          <h1>{"salam dunya".toUpperCase()}</h1>
-          <div className="row"> 
-              <Products/>
-          </div>
-          <AddProduct/>
-        </div>
+        <Router>
+          <Navbar first_name="Turqut" last_name="Kerimli"/>
+        
+          <Switch>
+            <Route exact path= "/" component={Home}/>
+            <Route exact path= "/products" component={Products}/>
+            <Route exact path= "/product-detail/:id" component={ProductDetail}/>
+            <Route exact path= "/product-update/:id" component={UpdateProduct}/>
+            <Route exact path= "/products/add" component={AddProduct}/>
+          </Switch>
+        </Router>
       </div>
     );
   }
